@@ -1,11 +1,13 @@
 import { useState } from 'react';
 
-const TodoItem = ({input}) => {
+const TodoItem = ({todo, onToggle, onRemove}) => {
   return (
     <div>
-      <input type='checkbox' />
-      <span>{input}</span>
-      <button>Remove</button>
+      <input type='checkbox' onClick={onToggle} checked={todo.done} value={todo.id} readOnly='true'/>
+      <span style={{
+        textDecoration: todo.done ? 'line-through' : 'none'
+      }}>{todo.input}</span>
+      <button type='button' onClick={onRemove} >Remove</button>
     </div>
 )
 };
@@ -13,7 +15,7 @@ const TodoItem = ({input}) => {
 const Todos = () => {
 
   const [input, setInput] = useState('')
-  const [todos, setTodos] = useState([{input: 'todo1', done: true}, {input: 'todo2', done: true}])
+  const [todos, setTodos] = useState([{id:1, input: 'todo1', done: true}, {id:2, input: 'todo2', done: false}])
 
   const onChange = (e) => {
     e.preventDefault()
@@ -22,8 +24,16 @@ const Todos = () => {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    setTodos(todos.concat({input: input, done: false}));
+    setTodos(todos.concat({id: todos.length + 1, input: input, done: false}));
     setInput('')
+  }
+
+  const onToggle = (e) => {
+    e.preventDefault()
+    console.log(e)
+    console.log(Number(e.target.value))
+    const newTodos = todos.map(todo => todo.id === Number(e.target.value) ? {...todo, done: !todo.done} : todo)
+    setTodos(newTodos)
   }
 
   return (
@@ -33,7 +43,7 @@ const Todos = () => {
         <button type='submit'>Insert</button>
       </form>
       <div>
-        {todos.map(todo => <TodoItem input={todo.input}></TodoItem>)}
+        {todos.map(todo => <TodoItem todo={todo} onToggle={onToggle}></TodoItem>)}
       </div>
     </div>
   );
