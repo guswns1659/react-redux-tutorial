@@ -1,15 +1,23 @@
 import { useState } from 'react';
+import UpdateReady from './UpdateReady';
 
 const TodoItem = ({ todo, onToggle, onRemove, onUpdateReady }) => {
+
+  const onUpdateSubmit = () => {
+
+  }
+
   return (
     <div>
       <input type='checkbox' onClick={() => onToggle(todo.id)} checked={todo.done} readOnly={true} />
 
-      {todo.updateReady ? (<input type='text' />) : (<span style={{
-        textDecoration: todo.done ? 'line-through' : 'none'
-      }}>{todo.input}</span>)}
+      {todo.updateReady ?
+        (<UpdateReady></UpdateReady>) :
+        (<span style={{ textDecoration: todo.done ? 'line-through' : 'none' }}>{todo.input}</span>)
+      }
 
-      <button type='button' onClick={() => onUpdateReady(todo.id)}>Update</button>
+      {!todo.updateReady && <button type='button' onClick={() => onUpdateReady(todo.id)}>Update</button>}
+
       <button type='button' onClick={() => onRemove(todo.id)}>Remove</button>
     </div>);
 };
