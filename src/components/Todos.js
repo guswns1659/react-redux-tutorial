@@ -1,18 +1,22 @@
 import { useState } from 'react';
 import UpdateReady from './UpdateReady';
 
-const TodoItem = ({ todo, onToggle, onRemove, onUpdateReady }) => {
+const TodoItem = ({ todo, updateReadyInput, onToggle, onRemove, onUpdateReady, onUpdateReadyChange }) => {
 
   const onUpdateSubmit = () => {
 
-  }
+  };
 
   return (
     <div>
       <input type='checkbox' onClick={() => onToggle(todo.id)} checked={todo.done} readOnly={true} />
 
       {todo.updateReady ?
-        (<UpdateReady></UpdateReady>) :
+        (<UpdateReady
+          updateReadyInput={updateReadyInput}
+          onUpdateReadyChange={onUpdateReadyChange}
+          onUpdateSubmit={onUpdateSubmit}>
+        </UpdateReady>) :
         (<span style={{ textDecoration: todo.done ? 'line-through' : 'none' }}>{todo.input}</span>)
       }
 
@@ -30,6 +34,7 @@ const Todos = () => {
       { id: 2, input: 'todo2', done: false, updateReady: false }
     ]);
   const [todoId, setTodoId] = useState(3);
+  const [updateReadyInput, setUpdateReadyInput] = useState('');
 
   const onChange = (e) => {
     e.preventDefault();
@@ -56,14 +61,26 @@ const Todos = () => {
     setTodos(todos.map(todo => todo.id === id ? { ...todo, updateReady: !todo.updateReady } : todo));
   };
 
+  const onUpdateReadyChange = (e) => {
+    e.preventDefault();
+    setUpdateReadyInput(e.target.value);
+  };
+
   return (<div>
     <form onSubmit={onSubmit}>
       <input type='text' value={input} onChange={onChange} />
       <button type='submit'>Insert</button>
     </form>
     <div>
-      {todos.map(todo => <TodoItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove}
-                                   onUpdateReady={onUpdateReady}></TodoItem>)}
+      {todos.map(todo =>
+        <TodoItem key={todo.id}
+                  todo={todo}
+                  updateReadyInput={updateReadyInput}
+                  onToggle={onToggle}
+                  onRemove={onRemove}
+                  onUpdateReady={onUpdateReady}
+                  onUpdateReadyChange={onUpdateReadyChange}>
+        </TodoItem>)}
     </div>
   </div>);
 };

@@ -1,9 +1,9 @@
 import '../css/updateReady.css';
 
-const UpdateReady = (onUpdateSubmit) => {
+const UpdateReady = (updateReadyInput, onUpdateReadyChange, onUpdateSubmit) => {
   return (
     <form className='updateReady' onSubmit={onUpdateSubmit}>
-      <input type='text' />
+      <input type='text' value={updateReadyInput} onChange={onUpdateReadyChange}/>
       <button type='submit' >Confirm</button>
     </form>
   )
