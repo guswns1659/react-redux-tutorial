@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-const TodoItem = ({todo, onToggle}) => {
+const TodoItem = ({todo, onToggle, onRemove}) => {
   return (
     <div>
       <input type='checkbox' onClick={() => onToggle(todo.id)} checked={todo.done} readOnly={true}/>
       <span style={{
         textDecoration: todo.done ? 'line-through' : 'none'
       }}>{todo.input}</span>
-      <button type='button' >Remove</button>
+      <button type='button' onClick={() => onRemove(todo.id)} >Remove</button>
     </div>
 )
 };
@@ -34,6 +34,10 @@ const Todos = () => {
     setTodos(newTodos)
   }
 
+  const onRemove = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id ))
+  }
+
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -41,7 +45,7 @@ const Todos = () => {
         <button type='submit'>Insert</button>
       </form>
       <div>
-        {todos.map(todo => <TodoItem key={todo.id} todo={todo} onToggle={onToggle}></TodoItem>)}
+        {todos.map(todo => <TodoItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove}></TodoItem>)}
       </div>
     </div>
   );
