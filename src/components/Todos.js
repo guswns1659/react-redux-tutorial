@@ -13,6 +13,7 @@ const TodoItem = ({ todo, updateReadyInput, onToggle, onRemove, onUpdateReady, o
 
       {todo.updateReady ?
         (<UpdateReady
+          todo={todo}
           updateReadyInput={updateReadyInput}
           onUpdateReadyChange={onUpdateReadyChange}
           onUpdateSubmit={onUpdateSubmit}>
