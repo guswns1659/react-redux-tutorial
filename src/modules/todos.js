@@ -90,6 +90,16 @@ function todos(state=initialState, action) {
         ...state,
         todos: state.todos.map(todo => (todo.id === action.id ? {...todo, input: state.updateReadyInput, updateReady: !todo.updateReady} : todo))
       }
+    case TOGGLE:
+      return  {
+        ...state,
+        todos: state.todos.map(todo => (todo.id === action.id ? {...todo, done: !todo.done} : todo))
+    }
+    case REMOVE:
+      return {
+        ...state,
+        todos: state.todos.filter(todo => todo.id !== action.id)
+      }
     default:
       return state
   }
