@@ -80,6 +80,18 @@ function todos(state=initialState, action) {
         ...state,
         todos: state.todos.map(todo => (todo.id === action.id ? {...todo, updateReady: !todo.updateReady} : todo))
       }
+    case UPDATE_INPUT_CHANGE:
+      return {
+        ...state,
+        updateReadyInput: action.updateReadyInput
+      }
+    case UPDATE:
+      return {
+        ...state,
+        todos: state.todos.map(todo => (todo.id === action.id ? {...todo, input: state.updateReadyInput} : todo))
+      }
   }
 }
+
+export default todos;
 
