@@ -15,7 +15,6 @@ export const inputChange = (input) => ({
   }
 );
 
-
 let todoId = 3;
 export const insert = (input) => ({
   type: INSERT,
@@ -84,12 +83,12 @@ function todos(state=initialState, action) {
     case UPDATE_INPUT_CHANGE:
       return {
         ...state,
-        updateReadyInput: action.updateReadyInput
+        updateReadyInput: action.updateInput
       }
     case UPDATE:
       return {
         ...state,
-        todos: state.todos.map(todo => (todo.id === action.id ? {...todo, input: state.updateReadyInput} : todo))
+        todos: state.todos.map(todo => (todo.id === action.id ? {...todo, input: state.updateReadyInput, updateReady: !todo.updateReady} : todo))
       }
     default:
       return state

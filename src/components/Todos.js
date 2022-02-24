@@ -1,6 +1,6 @@
 import UpdateReady from './UpdateReady';
 
-const TodoItem = ({ todo, updateReadyInput, onToggle, onRemove, onUpdateReady, onUpdateReadyChange, onUpdateSubmit }) => {
+const TodoItem = ({ todo, updateReadyInput, onToggle, onRemove, onUpdateReady, onUpdateInputChange, onUpdate }) => {
   return (
     <div>
       <input type='checkbox' onClick={() => onToggle(todo.id)} checked={todo.done} readOnly={true} />
@@ -9,8 +9,8 @@ const TodoItem = ({ todo, updateReadyInput, onToggle, onRemove, onUpdateReady, o
         (<UpdateReady
           todo={todo}
           updateReadyInput={updateReadyInput}
-          onUpdateReadyChange={onUpdateReadyChange}
-          onUpdateSubmit={onUpdateSubmit}>
+          onUpdateInputChange={onUpdateInputChange}
+          onUpdate={onUpdate}>
         </UpdateReady>) :
         (<span style={{ textDecoration: todo.done ? 'line-through' : 'none' }}>{todo.input}</span>)
       }
@@ -33,27 +33,6 @@ const Todos = ({input, todos, updateReadyInput,
     // setTodos(todos.filter(todo => todo.id !== id));
   };
 
-  // const onUpdateReady = (id) => {
-  //   setTodos(todos.map(todo => todo.id === id ? { ...todo, updateReady: !todo.updateReady } : todo));
-  //   todos.forEach(todo => {
-  //     if (todo.id === id) {
-  //       setUpdateReadyInput(todo.input)
-  //     }
-  //   })
-  // };
-
-  // const onUpdateReadyChange = (e) => {
-  //   e.preventDefault();
-  //   setUpdateReadyInput(e.target.value);
-  // };
-
-  // const onUpdateSubmit = (e, id) => {
-  //   e.preventDefault()
-  //   console.log('id - ', id)
-  //   setTodos(todos.map(todo => todo.id === id ? {...todo, input: updateReadyInput, updateReady: !todo.updateReady} : todo))
-  //   setUpdateReadyInput('')
-  // };
-
   const handleInsert = (e) => {
     e.preventDefault()
     onInsert(input)
@@ -73,8 +52,8 @@ const Todos = ({input, todos, updateReadyInput,
                   onToggle={onToggle}
                   onRemove={onRemove}
                   onUpdateReady={onUpdateReady}
-                  onUpdateReadyChange={onUpdateInputChange}
-                  onUpdateSubmit={onUpdate}
+                  onUpdateInputChange={onUpdateInputChange}
+                  onUpdate={onUpdate}
         >
         </TodoItem>)}
     </div>
