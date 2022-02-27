@@ -1,19 +1,19 @@
 import Counter from '../components/Counter';
+import { useDispatch, useSelector } from 'react-redux';
 import { decrease, increase } from '../modules/counter';
-import { connect } from 'react-redux';
+import { useCallback } from 'react';
 
-const CounterContainer = ({number, increase, decrease}) => {
+const CounterContainer = () => {
+  const number = useSelector(state => state.counter.number);
+  const dispatch = useDispatch();
+  const onIncrease = useCallback(() => dispatch(increase()), [dispatch]); //
+  const onDecrease = useCallback(() => dispatch(decrease()), [dispatch]);
+
   return (
-    <Counter number={number} onIncrease={increase} onDecrease={decrease}></Counter>
+    <Counter number={number}
+             onIncrease={onIncrease}
+             onDecrease={onDecrease}></Counter>
   )
 }
 
-export default connect(
-  state => ({
-    number: state.counter.number
-  }),
-  disPatch => ({
-    increase: () => disPatch(increase()),
-    decrease: () => disPatch(decrease())
-  }),
-)(CounterContainer)
+export default CounterContainer;
