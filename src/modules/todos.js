@@ -15,38 +15,39 @@ export const inputChange = (input) => ({
   }
 );
 
-export const insert = (id, input) => ({
+let todoId = 3;
+export const insert = (input) => ({
   type: INSERT,
   todo: {
-    id: id++,
+    id: todoId++,
     input: input,
-    done: true,
+    done: false,
     updateReady: false
-  }
+  },
 });
 
-const updateReady = (id) => ({
+export const updateReady = (id) => ({
     type: UPDATE_READY,
     id
   }
 )
 
-const updateInputChange = (updateInput) => ({
+export const updateInputChange = (updateInput) => ({
   type: UPDATE_INPUT_CHANGE,
   updateInput
 })
 
-const update = (id) => ({
+export const update = (id) => ({
   type: UPDATE,
   id
 })
 
-const toggle = (id) => ({
+export const toggle = (id) => ({
   type: TOGGLE,
   id
 })
 
-const remove = (id) => ({
+export const remove = (id) => ({
   type: REMOVE,
   id
 })
@@ -59,7 +60,6 @@ const initialState = {
       { id: 1, input: 'todo1', done: true, updateReady: false },
       { id: 2, input: 'todo2', done: false, updateReady: false }
     ],
-  todoId: 3,
   updateReadyInput: ''
 }
 
@@ -80,6 +80,30 @@ function todos(state=initialState, action) {
         ...state,
         todos: state.todos.map(todo => (todo.id === action.id ? {...todo, updateReady: !todo.updateReady} : todo))
       }
+    case UPDATE_INPUT_CHANGE:
+      return {
+        ...state,
+        updateReadyInput: action.updateInput
+      }
+    case UPDATE:
+      return {
+        ...state,
+        todos: state.todos.map(todo => (todo.id === action.id ? {...todo, input: state.updateReadyInput, updateReady: !todo.updateReady} : todo))
+      }
+    case TOGGLE:
+      return  {
+        ...state,
+        todos: state.todos.map(todo => (todo.id === action.id ? {...todo, done: !todo.done} : todo))
+    }
+    case REMOVE:
+      return {
+        ...state,
+        todos: state.todos.filter(todo => todo.id !== action.id)
+      }
+    default:
+      return state
   }
 }
+
+export default todos;
 
