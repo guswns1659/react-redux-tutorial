@@ -25,15 +25,6 @@ const Todos = ({input, todos, updateReadyInput,
                 onInputChange, onInsert, onUpdateReady, onUpdateInputChange, onUpdate,
                 onToggle, onRemove
                 }) => {
-  // const onToggle = (id) => {
-  //   const newTodos = todos.map(todo => todo.id === id ? { ...todo, done: !todo.done } : todo);
-  //   // setTodos(newTodos);
-  // };
-  //
-  // const onRemove = (id) => {
-  //   // setTodos(todos.filter(todo => todo.id !== id));
-  // };
-
   const handleInsert = (e) => {
     e.preventDefault()
     onInsert(input)

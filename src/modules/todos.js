@@ -1,5 +1,4 @@
 // action
-
 const INPUT_CHANGE = 'todo/INPUT_CHANGE';
 const INSERT = 'todo/INSERT';
 const UPDATE_READY = 'todo/UPDATE_READY';
